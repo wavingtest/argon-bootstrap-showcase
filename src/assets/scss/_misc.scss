@@ -120,3 +120,73 @@
 .shadow-soft { box-shadow: $box-shadow !important; }
 
 .section-spacer { margin-top: 2rem; }
+
+.advanced-topbar {
+  .advanced-topbar-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.75rem;
+    align-items: center;
+  }
+
+  .left-actions,
+  .right-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .toolbar-search {
+    position: relative;
+    min-width: 260px;
+
+    .form-control {
+      padding-left: 2rem;
+    }
+
+    i {
+      position: absolute;
+      top: 50%;
+      left: 0.65rem;
+      transform: translateY(-50%);
+      color: $neutral-400;
+    }
+  }
+}
+
+.ops-grid-card {
+  .ops-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+}
+
+.split-panel-preview {
+  border: 1px solid $border-color;
+  border-radius: $border-radius;
+  overflow: hidden;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+
+  .split-header {
+    background: $neutral-100;
+    border-bottom: 1px solid $border-color;
+    padding: 0.625rem 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .split-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $neutral-500;
+    font-size: 0.875rem;
+  }
+}

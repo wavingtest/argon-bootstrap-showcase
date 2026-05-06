@@ -23,6 +23,10 @@ import {
   FormGroup,
   Label,
   Input,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import {
@@ -99,6 +103,66 @@ const STATUS_META = {
   info: 'Em separacao',
 };
 
+const OPS_COLUMN_OPTIONS = [
+  { key: 'name', label: 'Nome' },
+  { key: 'tma', label: 'TMA' },
+  { key: 'tme', label: 'TME' },
+  { key: 'tmrAssign', label: 'TMR Atribuicao' },
+  { key: 'inAttendance', label: 'Em atendimento' },
+  { key: 'assigned', label: 'Atribuidas' },
+  { key: 'waiting', label: 'Em espera' },
+  { key: 'closed', label: 'Encerradas' },
+  { key: 'csat', label: 'CSAT' },
+  { key: 'nps', label: 'NPS' },
+];
+
+const OPS_ROWS = [
+  {
+    id: 'Q-01',
+    name: 'Suporte',
+    tma: '04:12',
+    tme: '01:08',
+    tmrAssign: '00:33',
+    inAttendance: 18,
+    assigned: 26,
+    waiting: 5,
+    closed: 84,
+    csat: '94%',
+    nps: '71',
+  },
+  {
+    id: 'Q-02',
+    name: 'Comercial',
+    tma: '05:05',
+    tme: '00:58',
+    tmrAssign: '00:22',
+    inAttendance: 11,
+    assigned: 14,
+    waiting: 3,
+    closed: 41,
+    csat: '91%',
+    nps: '68',
+  },
+  {
+    id: 'Q-03',
+    name: 'Whatsapp',
+    tma: '03:47',
+    tme: '00:49',
+    tmrAssign: '00:19',
+    inAttendance: 29,
+    assigned: 34,
+    waiting: 7,
+    closed: 120,
+    csat: '96%',
+    nps: '77',
+  },
+];
+
+const AGENTS_ROWS = [
+  { id: 'A-01', name: 'teste02', extension: '1718', queues: 'Suporte, Comercial' },
+  { id: 'A-02', name: 'Laura Oliveira', extension: '1010', queues: 'Whatsapp, Suporte' },
+];
+
 export default function Showcase() {
   const [pill, setPill] = useState('today');
   const [accordionOpen, setAccordionOpen] = useState('1');
@@ -113,6 +177,43 @@ export default function Showcase() {
     ...EMPTY_ORDER_FORM,
     createdAt: new Date().toISOString().slice(0, 10),
   });
+  const [topbarAiOpen, setTopbarAiOpen] = useState(false);
+  const [topbarNotifOpen, setTopbarNotifOpen] = useState(false);
+  const [topbarProfileOpen, setTopbarProfileOpen] = useState(false);
+  const [opsConfigOpen, setOpsConfigOpen] = useState(false);
+  const [opsColumnsOpen, setOpsColumnsOpen] = useState(false);
+  const [reorderMode, setReorderMode] = useState('shift');
+  const [visibleOpsColumns, setVisibleOpsColumns] = useState(
+    OPS_COLUMN_OPTIONS.reduce((acc, col) => ({ ...acc, [col.key]: true }), {}),
+  );
+  const [selectedAiAgent, setSelectedAiAgent] = useState('');
+  const [topbarFeedback, setTopbarFeedback] = useState('Pronto para interacoes');
+  const [opsSort, setOpsSort] = useState({ key: 'name', direction: 'asc' });
+  const [selectedSupervisorAgent, setSelectedSupervisorAgent] = useState(null);
+  const [splitPanelText, setSplitPanelText] = useState('Area reservada para iframe/embed');
+
+  const visibleOpsList = useMemo(
+    () => OPS_COLUMN_OPTIONS.filter((col) => visibleOpsColumns[col.key]),
+    [visibleOpsColumns],
+  );
+  const orderedOpsColumns = useMemo(
+    () => (reorderMode === 'swap' ? [...visibleOpsList].reverse() : visibleOpsList),
+    [reorderMode, visibleOpsList],
+  );
+  const displayedOpsRows = useMemo(() => {
+    const rows = [...OPS_ROWS];
+    rows.sort((a, b) => {
+      const av = a[opsSort.key];
+      const bv = b[opsSort.key];
+      if (typeof av === 'number' && typeof bv === 'number') {
+        return opsSort.direction === 'asc' ? av - bv : bv - av;
+      }
+      return opsSort.direction === 'asc'
+        ? String(av).localeCompare(String(bv))
+        : String(bv).localeCompare(String(av));
+    });
+    return rows;
+  }, [opsSort]);
 
   const selectedSeries = REVENUE_BY_PERIOD[pill];
 
@@ -266,6 +367,26 @@ export default function Showcase() {
   const toggleAccordion = (id) =>
     setAccordionOpen((current) => (current === id ? '' : id));
 
+  const toggleOpsColumn = (key) => {
+    setVisibleOpsColumns((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+  const resetOpsPreferences = () => {
+    setVisibleOpsColumns(OPS_COLUMN_OPTIONS.reduce((acc, col) => ({ ...acc, [col.key]: true }), {}));
+    setReorderMode('shift');
+    setOpsSort({ key: 'name', direction: 'asc' });
+    setTopbarFeedback('Preferencias da grade restauradas');
+  };
+  const handleOpsSort = (key) => {
+    setOpsSort((prev) => {
+      if (prev.key !== key) return { key, direction: 'asc' };
+      return { key, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
+    });
+  };
+  const handleSupervisorAction = (agent, actionLabel) => {
+    setSelectedSupervisorAgent(agent.id);
+    setSplitPanelText(`${actionLabel} aplicado para ${agent.name} (ramal ${agent.extension})`);
+  };
+
   const handleCreateOrder = (e) => {
     e.preventDefault();
     if (!orderForm.id || !orderForm.name || !orderForm.email || !orderForm.total) return;
@@ -316,6 +437,87 @@ export default function Showcase() {
           </Button>
         </div>
       </div>
+
+      <Card className="section-spacer advanced-topbar">
+        <CardBody>
+          <div className="advanced-topbar-inner">
+            <div className="left-actions">
+              <Button color="secondary" size="sm" className="btn-icon">
+                <i className="fa-solid fa-bars" />
+              </Button>
+              <div className="toolbar-search">
+                <i className="fa-solid fa-magnifying-glass" />
+                <input className="form-control" placeholder="Buscar agente, fila ou ramal" />
+              </div>
+            </div>
+            <div className="right-actions">
+              <Dropdown isOpen={topbarAiOpen} toggle={() => setTopbarAiOpen((v) => !v)}>
+                <DropdownToggle color="secondary" size="sm" className="btn-icon" caret>
+                  <i className="fa-solid fa-wand-magic-sparkles" /> FlexIA Squad
+                </DropdownToggle>
+                <DropdownMenu end className="p-2" style={{ minWidth: 280 }}>
+                  <Label className="mb-1">Selecione o agente de IA</Label>
+                  <Input
+                    type="select"
+                    className="mb-2"
+                    value={selectedAiAgent}
+                    onChange={(e) => setSelectedAiAgent(e.target.value)}
+                  >
+                    <option>Selecione um agente</option>
+                    <option>Assistente Comercial</option>
+                    <option>Assistente Suporte</option>
+                  </Input>
+                  <Button
+                    color="primary"
+                    size="sm"
+                    block
+                    onClick={() =>
+                      setTopbarFeedback(
+                        selectedAiAgent ? `Conversa iniciada com ${selectedAiAgent}` : 'Selecione um agente de IA',
+                      )
+                    }
+                  >
+                    Iniciar conversa
+                  </Button>
+                </DropdownMenu>
+              </Dropdown>
+
+              <Dropdown isOpen={topbarNotifOpen} toggle={() => setTopbarNotifOpen((v) => !v)}>
+                <DropdownToggle color="secondary" size="sm" className="btn-icon" caret>
+                  <i className="fa-regular fa-bell" />
+                </DropdownToggle>
+                <DropdownMenu end style={{ minWidth: 280 }}>
+                  <DropdownItem header>Notificacoes</DropdownItem>
+                  <DropdownItem onClick={() => setTopbarFeedback('Abrindo fila Suporte')}>
+                    Novos atendimentos na fila Suporte
+                  </DropdownItem>
+                  <DropdownItem onClick={() => setTopbarFeedback('Relatorio diario selecionado')}>
+                    Relatorio diario gerado
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem className="text-center" onClick={() => setTopbarFeedback('Listando notificacoes')}>
+                    Ver tudo
+                  </DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+
+              <Dropdown isOpen={topbarProfileOpen} toggle={() => setTopbarProfileOpen((v) => !v)}>
+                <DropdownToggle color="secondary" size="sm" className="btn-icon" caret>
+                  <i className="fa-regular fa-circle-user" /> Teste_QA
+                </DropdownToggle>
+                <DropdownMenu end>
+                  <DropdownItem>Configuracoes</DropdownItem>
+                  <DropdownItem>Alterar senha</DropdownItem>
+                  <DropdownItem>Editar perfil</DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>Sair</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+            </div>
+          </div>
+          <div className="text-muted small mt-2">{topbarFeedback}</div>
+        </CardBody>
+      </Card>
 
       <Row className="g-3">
         {STAT_CARDS.map((stat) => (
@@ -444,6 +646,208 @@ export default function Showcase() {
             filterValue={statusFilter}
             onFilterChange={setStatusFilter}
           />
+        </Col>
+      </Row>
+
+      <Row className="g-3 section-spacer">
+        <Col xs={12}>
+          <Card className="ops-grid-card">
+            <CardHeader>
+              <h3>Monitoramento unificado - Filas</h3>
+              <span className="text-muted">Grid operacional com configuracoes de colunas</span>
+            </CardHeader>
+            <CardBody>
+              <div className="ops-toolbar">
+                <Dropdown isOpen={opsConfigOpen} toggle={() => setOpsConfigOpen((v) => !v)}>
+                  <DropdownToggle color="secondary" size="sm" className="btn-icon" caret>
+                    <i className="fa-solid fa-gear" /> Configuracoes
+                  </DropdownToggle>
+                  <DropdownMenu className="p-2" style={{ minWidth: 320 }}>
+                    <div className="small fw-semibold mb-2">Reordenacao de colunas</div>
+                    <FormGroup check className="mb-1">
+                      <Input
+                        type="radio"
+                        name="reorderMode"
+                        checked={reorderMode === 'shift'}
+                        onChange={() => setReorderMode('shift')}
+                      />
+                      <Label check>Empurrar (Shift)</Label>
+                    </FormGroup>
+                    <FormGroup check>
+                      <Input
+                        type="radio"
+                        name="reorderMode"
+                        checked={reorderMode === 'swap'}
+                        onChange={() => setReorderMode('swap')}
+                      />
+                      <Label check>Trocar (Swap)</Label>
+                    </FormGroup>
+                  </DropdownMenu>
+                </Dropdown>
+
+                <Button color="secondary" size="sm" className="btn-icon" onClick={resetOpsPreferences}>
+                  <i className="fa-regular fa-trash-can" /> Limpar memoria
+                </Button>
+
+                <Dropdown isOpen={opsColumnsOpen} toggle={() => setOpsColumnsOpen((v) => !v)}>
+                  <DropdownToggle color="secondary" size="sm" className="btn-icon" caret>
+                    <i className="fa-regular fa-eye" /> Visualizar colunas
+                  </DropdownToggle>
+                  <DropdownMenu className="p-2" style={{ minWidth: 260 }}>
+                    {OPS_COLUMN_OPTIONS.map((col) => (
+                      <FormGroup check key={col.key}>
+                        <Input
+                          type="checkbox"
+                          checked={visibleOpsColumns[col.key]}
+                          onChange={() => toggleOpsColumn(col.key)}
+                        />
+                        <Label check>{col.label}</Label>
+                      </FormGroup>
+                    ))}
+                  </DropdownMenu>
+                </Dropdown>
+              </div>
+
+              <div className="table-responsive mt-3">
+                <table className="table align-middle">
+                  <thead>
+                    <tr>
+                      {visibleOpsList.map((col) => (
+                        <th key={col.key}>{col.label}</th>
+                      
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {displayedOpsRows.map((row) => (
+                      <tr key={row.id}>
+                        {orderedOpsColumns.map((col) => (
+                          <td key={`${row.id}-${col.key}`}>{row[col.key]}</td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <div className="d-flex flex-wrap gap-2 mt-2 ops-clickable">
+                {orderedOpsColumns.map((col) => (
+                  <Button
+                    key={`sort-${col.key}`}
+                    size="sm"
+                    color={opsSort.key === col.key ? 'primary' : 'secondary'}
+                    outline={opsSort.key !== col.key}
+                    onClick={() => handleOpsSort(col.key)}
+                  >
+                    {col.label}{' '}
+                    {opsSort.key === col.key
+                      ? opsSort.direction === 'asc'
+                        ? '↑'
+                        : '↓'
+                      : ''}
+                  </Button>
+                ))}
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+      </Row>
+
+      <Row className="g-3 section-spacer">
+        <Col xs={12} xl={8}>
+          <Card>
+            <CardHeader>
+              <h3>Painel do supervisor - Telefonia</h3>
+              <div className="header-actions">
+                <Button color="primary" size="sm">
+                  Adicionar agente
+                </Button>
+              </div>
+            </CardHeader>
+            <CardBody>
+              <div className="table-responsive">
+                <table className="table align-middle">
+                  <thead>
+                    <tr>
+                      <th>Deslogar</th>
+                      <th>Agente</th>
+                      <th>Ramal</th>
+                      <th>Pausar/Despausar</th>
+                      <th>Filas</th>
+                      <th>Penalidade</th>
+                      <th>Espionar</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {AGENTS_ROWS.map((agent) => (
+                      <tr key={agent.id} className={selectedSupervisorAgent === agent.id ? 'table-active' : ''}>
+                        <td>
+                          <Button
+                            color="danger"
+                            outline
+                            size="sm"
+                            onClick={() => handleSupervisorAction(agent, 'Logout')}
+                          >
+                            <i className="fa-solid fa-power-off" />
+                          </Button>
+                        </td>
+                        <td>{agent.name}</td>
+                        <td>{agent.extension}</td>
+                        <td>
+                          <div className="d-flex gap-2">
+                            <Input type="select" bsSize="sm">
+                              <option>Selecione uma pausa</option>
+                            </Input>
+                            <Button
+                              color="primary"
+                              size="sm"
+                              onClick={() => handleSupervisorAction(agent, 'Pausa')}
+                            >
+                              Pausar
+                            </Button>
+                          </div>
+                        </td>
+                        <td>{agent.queues}</td>
+                        <td>
+                          <Button
+                            color="primary"
+                            size="sm"
+                            onClick={() => handleSupervisorAction(agent, 'Penalidade')}
+                          >
+                            Alterar
+                          </Button>
+                        </td>
+                        <td>
+                          <Button
+                            color="primary"
+                            size="sm"
+                            onClick={() => handleSupervisorAction(agent, 'Espionagem')}
+                          >
+                            Espionar
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardBody>
+          </Card>
+        </Col>
+        <Col xs={12} xl={4}>
+          <Card className="h-100">
+            <CardHeader>
+              <h3>Tela sistema (split panel)</h3>
+            </CardHeader>
+            <CardBody>
+              <div className="split-panel-preview">
+                <div className="split-header">
+                  <strong>Tela de sistemas</strong>
+                  <i className="fa-solid fa-xmark" />
+                </div>
+                <div className="split-body">{splitPanelText}</div>
+              </div>
+            </CardBody>
+          </Card>
         </Col>
       </Row>
 

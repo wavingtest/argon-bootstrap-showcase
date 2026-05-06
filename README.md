@@ -1,4 +1,4 @@
-﻿# Demo Dashboard - Argon-style Showcase
+﻿# WT Private - Argon-style Showcase
 
 Showcase de uma dashboard inspirada no Argon Dashboard Pro React
 (stack: Bootstrap + reactstrap), com paleta neutra e componentes comuns de admin.
@@ -11,25 +11,13 @@ Showcase de uma dashboard inspirada no Argon Dashboard Pro React
 - Font Awesome 6 Free
 - SCSS custom (look and feel argon-like)
 
-## Estrutura
-
-```text
-src/
-  assets/scss/      Tokens e parciais (sidebar, navbar, cards, forms, tables)
-  components/       Sidebar, AdminNavbar, Footer, StatCard, DataTable
-  layouts/          AdminLayout e AuthLayout
-  views/            Showcase, Profile, Login
-  data/mockData.js  Mocks estaticos
-  App.jsx           Rotas
-  main.jsx          Entry
-```
-
 ## Componentes da pagina
 
 Componentes presentes na pagina principal (`/`):
 
 - Sidebar (menu lateral) com opcao de colapsar/expandir
 - Topbar com busca, notificacoes e menu de usuario
+- Topbar avancada de acoes (dropdowns de IA, notificacoes e conta)
 - Date picker de intervalo (campos De e Ate)
 - Cards KPI (estatisticas)
 - Grafico de linha (Receita) com seletor Hoje/Semana/Mes/Ano
@@ -42,6 +30,15 @@ Componentes presentes na pagina principal (`/`):
   - Filtro por status
   - Botao de exportar
   - Botao de novo pedido
+- Grid operacional de monitoramento (Filas) com:
+  - Configuracoes de reordenacao (Shift/Swap)
+  - Limpar memoria
+  - Visualizacao de colunas com checkboxes
+  - Tabela com colunas dinamicas (mostrar/ocultar)
+- Painel do supervisor de telefonia:
+  - Tabela com acoes por linha (deslogar, pausar, alterar, espionar)
+  - Formularios inline por linha
+- Layout split panel (conteudo principal + painel lateral de sistema/embed)
 - Modal de criacao de pedido com formulario:
   - Codigo, cliente, email, total, status e data
   - Insercao imediata do novo registro na tabela (front-only)

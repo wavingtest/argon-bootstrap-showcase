@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <footer className="app-footer d-flex justify-content-between flex-wrap gap-2">
       <span>
-        © {new Date().getFullYear()} Demo Dashboard — Showcase de componentes.
+        © {new Date().getFullYear()} WT Private — Showcase de componentes.
       </span>
       <span className="d-flex gap-3">
         <a href="#docs" className="text-muted text-decoration-none">Docs</a>

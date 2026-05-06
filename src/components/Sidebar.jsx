@@ -6,9 +6,9 @@ const NAV_SECTIONS = [
   {
     title: 'Geral',
     items: [
-      { to: '/', icon: 'fa-chart-line', label: 'Dashboard', end: true },
+      { to: '/', icon: 'fa-house', label: 'Inicio', end: true },
       { to: '/profile', icon: 'fa-user', label: 'Perfil' },
-      { to: '/components', icon: 'fa-cube', label: 'Componentes', badge: 'NEW' },
+      { to: '/components', icon: 'fa-cube', label: 'Pagina de teste', badge: 'NEW' },
     ],
   },
   {
@@ -37,8 +37,8 @@ export default function Sidebar({ isOpen, isCollapsed, onClose }) {
         })}
       >
         <div className="app-sidebar__brand">
-          <span className="brand-mark">DD</span>
-          <span className="brand-name">Demo Dashboard</span>
+          <span className="brand-mark">WT</span>
+          <span className="brand-name">WT Private</span>
         </div>
 
         <nav className="app-sidebar__nav">
