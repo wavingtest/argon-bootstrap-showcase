@@ -1,0 +1,78 @@
+// Refinos de botões/badges/pills/progress ------------------
+
+.btn {
+  font-weight: 500;
+  letter-spacing: 0;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  transition: transform 0.05s ease-in-out, box-shadow 0.15s ease;
+
+  &:active { transform: translateY(1px); }
+}
+
+.btn-primary {
+  background: $neutral-900;
+  border-color: $neutral-900;
+
+  &:hover, &:focus {
+    background: $neutral-800;
+    border-color: $neutral-800;
+  }
+}
+
+.btn-outline-primary {
+  color: $neutral-900;
+  border-color: $neutral-300;
+
+  &:hover {
+    background: $neutral-900;
+    border-color: $neutral-900;
+    color: $neutral-0;
+  }
+}
+
+.btn-secondary {
+  background: $neutral-100;
+  border-color: $neutral-200;
+  color: $neutral-800;
+
+  &:hover {
+    background: $neutral-200;
+    border-color: $neutral-300;
+    color: $neutral-900;
+  }
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  i { font-size: 0.875rem; }
+}
+
+.btn-sm { padding: 0.35rem 0.65rem; font-size: 0.8125rem; }
+
+.badge {
+  font-weight: 600;
+  font-size: 0.7rem;
+  padding: 0.35em 0.6em;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+.badge.bg-light {
+  background: $neutral-100 !important;
+  color: $neutral-700;
+}
+
+.progress {
+  height: 6px;
+  background: $neutral-100;
+  border-radius: 999px;
+  overflow: hidden;
+
+  .progress-bar {
+    background: $neutral-800;
+  }
+}

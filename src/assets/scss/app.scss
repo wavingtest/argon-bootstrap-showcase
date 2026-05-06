@@ -1,0 +1,16 @@
+// Entry SCSS — agrega todos os parciais sobre o Bootstrap 5
+// Importa as variáveis primeiro para sobrescrever o tema padrão.
+
+@import "./variables";
+
+// Bootstrap 5 (CSS já importado em main.jsx). Aqui usamos só
+// as funções/mixins que precisarmos via SCSS dos parciais.
+
+@import "./layout";
+@import "./sidebar";
+@import "./navbar";
+@import "./cards";
+@import "./buttons";
+@import "./forms";
+@import "./tables";
+@import "./misc";

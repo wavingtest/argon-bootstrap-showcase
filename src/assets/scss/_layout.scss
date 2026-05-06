@@ -1,0 +1,62 @@
+// Estrutura geral do dashboard ----------------------------
+
+.app-shell {
+  min-height: 100vh;
+  background: $content-bg;
+}
+
+.app-main {
+  margin-left: $sidebar-width;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.2s ease-in-out;
+
+  @media (max-width: 991.98px) {
+    margin-left: 0;
+  }
+}
+
+.app-shell.is-sidebar-collapsed {
+  .app-main {
+    margin-left: $sidebar-collapsed;
+
+    @media (max-width: 991.98px) {
+      margin-left: 0;
+    }
+  }
+}
+
+.app-content {
+  flex: 1;
+  padding: 1.5rem 2rem 2.5rem;
+
+  @media (max-width: 575.98px) {
+    padding: 1rem;
+  }
+}
+
+.page-header {
+  margin-bottom: 1.5rem;
+
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: $neutral-900;
+    margin: 0 0 0.25rem;
+  }
+
+  .page-subtitle {
+    color: $neutral-500;
+    margin: 0;
+    font-size: 0.875rem;
+  }
+}
+
+.app-footer {
+  border-top: 1px solid $border-color;
+  background: $neutral-0;
+  padding: 1rem 2rem;
+  font-size: 0.8125rem;
+  color: $neutral-500;
+}
