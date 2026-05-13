@@ -1,4 +1,4 @@
-﻿# WT Private - Argon-style Showcase
+﻿# WT Private - Argon-style Showcase UI
 
 Showcase de uma dashboard inspirada no Argon Dashboard Pro React
 (stack: Bootstrap + reactstrap), com paleta neutra e componentes comuns de admin.
