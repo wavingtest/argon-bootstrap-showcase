@@ -14,7 +14,7 @@ export default function Inicio() {
           Pro React para validacao do WT.
         </p>
         <p className="mb-4">
-          Para testar o fluxo principal de cadastro e consulta, navegue no menu lateral em
+          Para testar o fluxo principal e os catalogos de componentes (alta, media e baixa prioridade), navegue em
           {' '}<strong>Pagina de teste</strong>{' '}ou clique no botao abaixo.
         </p>
         <Button color="primary" onClick={() => navigate('/components')}>

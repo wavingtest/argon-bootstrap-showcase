@@ -13,6 +13,8 @@ Showcase de uma dashboard inspirada no Argon Dashboard Pro React
 
 ## Componentes da pagina
 
+### Pagina de teste (`/components`)
+
 Componentes presentes na pagina principal (`/components`):
 
 - `Sidebar` (menu lateral com secoes, links e estado de colapso)
@@ -32,6 +34,65 @@ Componentes presentes na pagina principal (`/components`):
 - `BadgesAndStatusPillsCard` (variantes de `Badge` + `status-pill`)
 - `AlertsShowcaseCard` (variantes de `Alert` informativo/sucesso/aviso/erro)
 - `FaqAccordionCard` (reactstrap `Accordion`)
+
+**Catalogo prioridade alta** (final da mesma pagina, blocos `[WT]` isolados):
+
+- `NAV TABS` (Nav + TabContent)
+- `DROPDOWN`
+- `MODAL` (padrao + confirmacao)
+- `TABLE` (hover + acoes + Tooltip)
+- `PAGINATION`
+- `PROGRESS` (simples + multi)
+- `SPINNER`
+- `TOOLTIP` (UncontrolledTooltip)
+- `POPOVER`
+- `BREADCRUMB`
+- `HEADER` (faixa estilo Argon)
+- `INPUT GROUP`
+- `SELECT`
+- `SWITCH`
+- `CHECKBOX`
+- `RADIO GROUP`
+- `LIST GROUP`
+- `TIMELINE`
+- `ALERT` (referencia)
+
+**Catalogo prioridade media** (apos o catalogo alta, mesma pagina):
+
+- `OFFCANVAS` (painel lateral de filtros)
+- `COLLAPSE` (secao recolhivel)
+- `BUTTON GROUP` (filtros segmentados)
+- `BADGE` (variantes, pill, dot no icone)
+- `AVATAR` (tamanhos, imagem, status online)
+- `MEDIA OBJECT` (avatar + metadados)
+- `CARD` (header com acoes + footer)
+- `FORM VALIDATION` (valid/invalid + FormFeedback)
+- `TEXTAREA` / `FILE INPUT`
+- `DATE RANGE` (De / Ate)
+- `TOAST` (feedback pos-acao)
+- `TYPOGRAPHY` (titulos, labels, muted)
+- `CHART VARIANT` (mini bar sparkline)
+- `EMPTY STATE` (lista sem dados)
+- `PAGINATION + PAGE SIZE`
+- `SKELETON` (placeholder de carregamento)
+
+**Catalogo prioridade baixa** (apos o catalogo media, mesma pagina):
+
+- `CAROUSEL` (slides com controles)
+- `JUMBOTRON / HERO`
+- `NAVBAR VARIANT` (transparente, mock)
+- `PRICING TABLE`
+- `LOCK SCREEN`
+- `REGISTER`
+- `ERROR 404`
+- `MAINTENANCE`
+- `MAP` (placeholder sem API)
+- `FULL CALENDAR` (grade mensal mock)
+- `KANBAN` (colunas de status)
+- `WIZARD` (passos com navegacao)
+- `SORTABLE TABLE` (reordenar colunas)
+- `ICONS GALLERY` (amostra Font Awesome)
+- `ANIMATIONS` (microinteracao CSS)
 
 Componentes presentes na pagina de perfil (`/profile`):
 
