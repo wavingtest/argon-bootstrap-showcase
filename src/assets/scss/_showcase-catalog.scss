@@ -93,10 +93,251 @@
   }
 }
 
+.wt-showcase-block--multiselect {
+  .wt-showcase-block__body {
+    min-height: 12rem;
+    padding-bottom: 2rem;
+  }
+}
+
+.wt-showcase-block--datetime {
+  .wt-showcase-block__body {
+    min-height: 18rem;
+    padding-bottom: 2.5rem;
+  }
+}
+
+.wt-datetime-field {
+  &__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: $info;
+    margin-bottom: 0.35rem;
+  }
+}
+
+.input-group-alternative.wt-datetime-input-group {
+  border: 1px solid $neutral-200;
+  border-radius: $border-radius;
+  overflow: visible;
+
+  .input-group-text {
+    background: $neutral-0;
+    border: 0;
+    border-right: 1px solid $neutral-200;
+    color: $neutral-500;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .rdt {
+    flex: 1 1 auto;
+    min-width: 0;
+    position: relative;
+
+    .form-control {
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      font-size: 0.875rem;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+}
+
+.wt-datetime-input-group {
+  .rdtPicker {
+    z-index: 1060;
+    margin-top: 4px;
+    border: 1px solid $neutral-200;
+    border-radius: $border-radius;
+    box-shadow: 0 8px 24px rgba($neutral-900, 0.12);
+    font-size: 0.8125rem;
+    color: $neutral-800;
+
+    th {
+      font-weight: 600;
+      color: $neutral-600;
+    }
+
+    td.rdtDay:hover,
+    td.rdtMonth:hover,
+    td.rdtYear:hover {
+      background: $neutral-100;
+      border-radius: 50%;
+    }
+
+    td.rdtActive,
+    td.rdtActive:hover {
+      background: $info;
+      color: $neutral-0;
+      border-radius: 50%;
+      text-shadow: none;
+    }
+
+    td.rdtToday::before {
+      border-bottom-color: $info;
+    }
+
+    .rdtPrev,
+    .rdtNext,
+    .rdtSwitch {
+      color: $neutral-800;
+
+      &:hover {
+        background: $neutral-100;
+        color: $neutral-900;
+      }
+    }
+  }
+}
+
+.wt-multiselect-filter {
+  position: relative;
+  max-width: 220px;
+  font-size: 0.7rem;
+
+  &__label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.35rem;
+  }
+
+  &__label {
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+    color: $neutral-800;
+    text-transform: uppercase;
+  }
+
+  &__sort-btn {
+    border: 0;
+    background: transparent;
+    color: $neutral-500;
+    padding: 0.125rem 0.25rem;
+    line-height: 1;
+    cursor: pointer;
+
+    &:hover {
+      color: $neutral-800;
+    }
+  }
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.4rem 0.6rem;
+    border: 1px solid $neutral-200;
+    border-radius: $border-radius;
+    background: $neutral-0;
+    color: $neutral-700;
+    cursor: pointer;
+    text-align: left;
+
+    &:hover {
+      border-color: $neutral-300;
+    }
+
+    &.is-open {
+      border-color: $neutral-800;
+    }
+  }
+
+  &__trigger-text {
+    font-size: 0.7rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__trigger-icon {
+    margin-left: 0.5rem;
+    flex-shrink: 0;
+    font-size: 0.65rem;
+    line-height: 1;
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    background: $neutral-0;
+    border: 1px solid $neutral-200;
+    border-radius: $border-radius;
+    box-shadow: 0 8px 24px rgba($neutral-900, 0.12);
+    overflow: hidden;
+  }
+
+  &__search {
+    padding: 0.5rem;
+    border-bottom: 1px solid $neutral-100;
+
+    .form-control {
+      font-size: 0.7rem;
+    }
+  }
+
+  &__list {
+    max-height: 200px;
+    overflow-y: auto;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    margin: 0;
+    cursor: pointer;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: $neutral-800;
+    text-transform: uppercase;
+    border-bottom: 1px solid $neutral-50;
+
+    input[type='checkbox'] {
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+
+    &:hover {
+      background: $neutral-50;
+    }
+
+    &--all {
+      background: $neutral-50;
+      font-weight: 700;
+      border-bottom: 1px solid $neutral-200;
+    }
+  }
+
+  &__empty {
+    padding: 0.75rem 0.6rem;
+    font-size: 0.7rem;
+    color: $neutral-500;
+    text-align: center;
+  }
+}
+
 .wt-catalog-page--react-select {
   .wt-catalog-shell {
     overflow: visible;
     padding-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
 }
 

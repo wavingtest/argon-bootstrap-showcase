@@ -1,7 +1,13 @@
-export default function WtShowcaseBlock({ name, children, hint, overflowVisible = false }) {
+export default function WtShowcaseBlock({
+  name,
+  children,
+  hint,
+  overflowVisible = false,
+  className = '',
+}) {
   return (
     <section
-      className={`wt-showcase-block${overflowVisible ? ' wt-showcase-block--overflow-visible' : ''}`}
+      className={`wt-showcase-block${overflowVisible ? ' wt-showcase-block--overflow-visible' : ''}${className ? ` ${className}` : ''}`}
     >
       <header className="wt-showcase-block__header">
         <code className="wt-showcase-block__title">[WT] {name}</code>

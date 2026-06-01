@@ -97,6 +97,8 @@ Componentes presentes na pagina principal (`/components`):
 **React Select** (final da pagina, apos catalogos):
 
 - `REACT SELECT` (`react-select` combobox com clear, busca e valor padrao Crescente)
+- `MULTISELECT ATENDENTE` (filtro multivalor: busca, Selecionar todos, checkboxes)
+- `DATE PICKER` (`react-datetime` + calendario PT-BR, Data/Hora inicial e final)
 
 Componentes presentes na pagina de perfil (`/profile`):
 
