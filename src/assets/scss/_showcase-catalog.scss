@@ -307,6 +307,27 @@
   padding: 0.5rem 0;
 }
 
+.wt-react-select-demo {
+  .react-select__control {
+    border-radius: $border-radius;
+    cursor: pointer;
+  }
+
+  .react-select__indicator-separator {
+    background-color: $neutral-200;
+  }
+
+  .react-select__clear-indicator,
+  .react-select__dropdown-indicator {
+    color: $neutral-500;
+    padding: 6px;
+
+    &:hover {
+      color: $neutral-800;
+    }
+  }
+}
+
 // Prioridade baixa
 
 .wt-carousel-demo {

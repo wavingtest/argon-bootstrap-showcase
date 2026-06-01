@@ -94,6 +94,10 @@ Componentes presentes na pagina principal (`/components`):
 - `ICONS GALLERY` (amostra Font Awesome)
 - `ANIMATIONS` (microinteracao CSS)
 
+**React Select** (final da pagina, apos catalogos):
+
+- `REACT SELECT` (`react-select` combobox com clear, busca e valor padrao Crescente)
+
 Componentes presentes na pagina de perfil (`/profile`):
 
 - `ProfileHeader` (`page-header` com `page-title`/`page-subtitle`)

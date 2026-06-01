@@ -49,6 +49,7 @@ import DataTable from '../components/DataTable';
 import ArgonHighPrioritySection from '../components/showcase/ArgonHighPrioritySection';
 import ArgonMediumPrioritySection from '../components/showcase/ArgonMediumPrioritySection';
 import ArgonLowPrioritySection from '../components/showcase/ArgonLowPrioritySection';
+import ReactSelectShowcaseSection from '../components/showcase/ReactSelectShowcaseSection';
 import { STAT_CARDS, ORDERS, TRAFFIC_SOURCES, ACTIVITY_FEED } from '../data/mockData';
 
 ChartJS.register(
@@ -932,6 +933,7 @@ export default function Showcase() {
       <ArgonHighPrioritySection />
       <ArgonMediumPrioritySection />
       <ArgonLowPrioritySection />
+      <ReactSelectShowcaseSection />
 
       <Modal isOpen={modalOpen} toggle={() => setModalOpen((v) => !v)} centered>
         <Form onSubmit={handleCreateOrder}>
