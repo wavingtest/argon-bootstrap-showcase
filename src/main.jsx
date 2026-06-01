@@ -10,7 +10,7 @@ import App from './App';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/argon-bootstrap-showcase">
       <App />
     </BrowserRouter>
   </React.StrictMode>,
