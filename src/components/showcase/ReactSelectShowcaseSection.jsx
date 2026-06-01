@@ -20,10 +20,14 @@ const reactSelectStyles = {
       borderColor: state.isFocused ? '#232a36' : '#cdd2da',
     },
   }),
+  menuPortal: (base) => ({
+    ...base,
+    zIndex: 9999,
+  }),
   menu: (base) => ({
     ...base,
     fontSize: '0.875rem',
-    zIndex: 20,
+    zIndex: 9999,
   }),
   option: (base, state) => ({
     ...base,
@@ -44,10 +48,14 @@ export default function ReactSelectShowcaseSection() {
   const [sort, setSort] = useState(SORT_OPTIONS[0]);
 
   return (
-    <div className="wt-catalog-page section-spacer">
+    <div className="wt-catalog-page wt-catalog-page--react-select section-spacer">
       <div className="wt-catalog-shell">
-        <WtShowcaseBlock name="REACT SELECT" hint="react-select — combobox estilo cliente">
-          <div className="wt-react-select-demo" style={{ maxWidth: 280 }}>
+        <WtShowcaseBlock
+          name="REACT SELECT"
+          hint="react-select — combobox estilo cliente"
+          overflowVisible
+        >
+          <div className="wt-react-select-demo">
             <Select
               classNamePrefix="react-select"
               options={SORT_OPTIONS}
@@ -58,6 +66,8 @@ export default function ReactSelectShowcaseSection() {
               placeholder="Selecione..."
               aria-label="Ordenacao"
               styles={reactSelectStyles}
+              menuPortalTarget={typeof document !== 'undefined' ? document.body : null}
+              menuPosition="fixed"
             />
           </div>
           {sort && (

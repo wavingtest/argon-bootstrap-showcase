@@ -80,6 +80,24 @@
   &__body {
     padding: 1rem 1.25rem;
   }
+
+  &--overflow-visible {
+    overflow: visible;
+
+    .wt-showcase-block__body {
+      overflow: visible;
+      min-height: 6.5rem;
+      padding-top: 1.25rem;
+      padding-bottom: 1.75rem;
+    }
+  }
+}
+
+.wt-catalog-page--react-select {
+  .wt-catalog-shell {
+    overflow: visible;
+    padding-bottom: 1.5rem;
+  }
 }
 
 .wt-argon-header-demo {
@@ -308,6 +326,9 @@
 }
 
 .wt-react-select-demo {
+  max-width: 280px;
+  margin-bottom: 0.25rem;
+
   .react-select__control {
     border-radius: $border-radius;
     cursor: pointer;
